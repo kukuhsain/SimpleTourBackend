@@ -2,7 +2,7 @@ import hashlib
 import random
 from string import letters
 
-class HashingPassword():
+class PasswordHashing():
 	def make_salt(self, length=5):
 		return ''.join(random.choice(letters) for x in xrange(length))
 

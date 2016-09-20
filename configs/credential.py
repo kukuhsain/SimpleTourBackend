@@ -1,1 +1,1 @@
-SECRET_COOKIE = 'cookiepass'
+TOKEN_SECRET = 'tokenpass'

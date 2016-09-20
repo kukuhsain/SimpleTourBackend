@@ -1,5 +1,4 @@
 import webapp2
-from controllers import Home
 from controllers import *
 
 app = webapp2.WSGIApplication([

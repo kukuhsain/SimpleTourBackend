@@ -1,36 +1,51 @@
 from google.appengine.ext import ndb
+from utils.password_hashing import PasswordHashing
+from utils.token_hashing import TokenHashing
 
 class User(ndb.Model):
-	username = ndb.StringProperty(required=True)
+	email = ndb.StringProperty(required=True)
 	password = ndb.StringProperty(required=True)
-	email = ndb.StringProperty()
+	session = ndb.BooleanProperty()
 	created_date = ndb.DateTimeProperty(auto_now_add=True)
 
 	@classmethod
-	def get_user_by_username(cls, username):
-		user = cls.query(cls.username==username).get()
-		print user
-		return user
+	def _check_email_availability(cls, email):
+		if cls.get_user_by_email(email):
+			return False
+		else:
+			return True
 
 	@classmethod
-	def register(cls, username, password, email=None):
-		user = cls.get_user_by_username(username)
-		if not user:
-			hashed_password = HashingPassword().make_hashing_password(username, password)
-			new_admin = cls(username=username, password=hashed_password, email=email)
-			new_admin.put()
-			return new_admin.key.id()
+	def get_user_by_email(cls, email):
+		return cls.query(cls.email==email).get()
+
+	@classmethod
+	def register(cls, email, password):
+		if cls._check_email_availability(email):
+			hashed_password = PasswordHashing().make_hashing_password(email, password)
+			user = cls(email=email, password=hashed_password, session=False)
+			user.put()
+			return user.key.id()
 		else:
 			return False
 
 	@classmethod
-	def login(cls, username, password):
-		user = cls.get_user_by_username(username)
+	def login(cls, email, password):
+		user = cls.get_user_by_email(email)
 		if user:
-			password_validation_result = HashingPassword().validate_password(username, password, user.password)
+			password_validation_result = PasswordHashing().validate_password(email, password, user.password)
 			if password_validation_result:
-				return user.key.id()
+				user.session = True
+				user.put()
+				return TokenHashing().make_secure_value(user.key.id())
 			else:
 				return False
 		else:
 			return False
+
+	@classmethod
+	def logout(cls, token):
+		user_id = TokenHashing().check_secure_value(token)
+		user = cls.get_by_id(user_id)
+		user.session = False
+		user.put()

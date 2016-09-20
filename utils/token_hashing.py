@@ -1,8 +1,9 @@
 import hmac
+from configs.credential import TOKEN_SECRET
 
-class HashingCookie():
+class TokenHashing():
 	def hash_str(self, s):
-		return hmac.new(Credentials.SECRET_COOKIE, s).hexdigest()
+		return hmac.new(TOKEN_SECRET, s).hexdigest()
 
 	def make_secure_value(self, s):
 		return "%s|%s" % (s, self.hash_str(s))
