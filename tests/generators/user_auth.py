@@ -5,6 +5,7 @@ class UserAuth():
         self.base_url = base_url
         self.email = email
         self.password = password
+        self.access_token = ""
 
     def _get_dict_data(self):
         return {
@@ -17,6 +18,9 @@ class UserAuth():
 
     def set_password(self, password):
         self.password = password
+
+    def get_access_token(self):
+        return self.access_token
 
     def register(self):
         url = self.base_url + "/user/register"
@@ -31,8 +35,13 @@ class UserAuth():
         r = requests.post(url, data=self._get_dict_data())
         print r
         print r.text
+        if r.status_code == 200:
+            self.access_token = r.json()['access_token']
+        else:
+            self.access_token = ""
 
     def logout(self):
         url = self.base_url + "/user/logout"
+        r = requests.post(url, data={"access_token": self.access_token})
         print r
         print r.text

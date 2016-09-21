@@ -8,7 +8,14 @@ password = "111111"
 user = UserAuth(base_url, email, password)
 user.register()
 time.sleep(0.5)
+
 user.login()
+user.logout()
 
 user.set_password("222222")
 user.login()
+user.logout()
+
+user.set_password("111111")
+user.login()
+user.logout()

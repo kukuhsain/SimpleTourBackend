@@ -10,13 +10,13 @@ class User(ndb.Model):
 
 	@classmethod
 	def _check_email_availability(cls, email):
-		if cls.get_user_by_email(email):
+		if cls._get_user_by_email(email):
 			return False
 		else:
 			return True
 
 	@classmethod
-	def get_user_by_email(cls, email):
+	def _get_user_by_email(cls, email):
 		return cls.query(cls.email==email).get()
 
 	@classmethod
@@ -31,13 +31,12 @@ class User(ndb.Model):
 
 	@classmethod
 	def login(cls, email, password):
-		user = cls.get_user_by_email(email)
+		user = cls._get_user_by_email(email)
 		if user:
 			password_validation_result = PasswordHashing().validate_password(email, password, user.password)
 			if password_validation_result:
 				user.session = True
 				user.put()
-				print user
 				return TokenHashing().make_secure_value(str(user.key.id()))
 			else:
 				return False
@@ -45,8 +44,15 @@ class User(ndb.Model):
 			return False
 
 	@classmethod
-	def logout(cls, token):
-		user_id = TokenHashing().check_secure_value(token)
-		user = cls.get_by_id(user_id)
-		user.session = False
-		user.put()
+	def logout(cls, access_token):
+		user_id = TokenHashing().check_secure_value(access_token)
+		if user_id:
+			user = cls.get_by_id(user_id)
+			if user:
+				user.session = False
+				user.put()
+				return True
+			else:
+				return False
+		else:
+			return False

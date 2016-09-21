@@ -35,12 +35,13 @@ class UserLogin(Handlers):
 		username = self.request.get("email")
 		password = self.request.get("password")
 
-		userid = User.login(username, password)
+		access_token = User.login(username, password)
 		self.response.headers['Content-Type'] = 'application/json'
-		if userid:
+		if access_token:
 			response = {
 				"status": "success",
-				"message": "Login Successfully"
+				"message": "Login Successfully",
+				"access_token": access_token
 			}
 			self.response.out.write(json.dumps(response))
 		else:
@@ -53,4 +54,20 @@ class UserLogin(Handlers):
 
 class UserLogout(Handlers):
 	def post(self):
-		User.logout()
+		access_token = self.request.get("access_token")
+		print access_token
+		status = User.logout(access_token)
+		self.response.headers['Content-Type'] = 'application/json'
+		if status:
+			response = {
+				"status": "success",
+				"message": "Logout Successfully",
+			}
+			self.response.out.write(json.dumps(response))
+		else:
+			response = {
+				"status": "fail",
+				"message": "Logout failed"
+			}
+			self.response.set_status(403, message="Forbidden")
+			self.response.out.write(json.dumps(response))
