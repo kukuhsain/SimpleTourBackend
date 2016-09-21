@@ -37,7 +37,8 @@ class User(ndb.Model):
 			if password_validation_result:
 				user.session = True
 				user.put()
-				return TokenHashing().make_secure_value(user.key.id())
+				print user
+				return TokenHashing().make_secure_value(str(user.key.id()))
 			else:
 				return False
 		else:

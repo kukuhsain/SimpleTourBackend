@@ -9,7 +9,7 @@ class UserRegister(Handlers):
 
 		self.response.headers['Content-Type'] = 'application/json'
 		if email and password:
-			userid = User.register(username, password, email)
+			userid = User.register(email, password)
 			if userid:
 				response = {
 					"status": "success",
@@ -19,7 +19,7 @@ class UserRegister(Handlers):
 			else:
 				response = {
 					"status": "fail",
-					"message": "Username is not available"
+					"message": "Email is not available"
 				}
 				self.response.out.write(json.dumps(response))
 		else:
@@ -46,8 +46,9 @@ class UserLogin(Handlers):
 		else:
 			response = {
 				"status": "fail",
-				"message": "Login failed, wrong username and/or password"
+				"message": "Login failed, wrong email and/or password"
 			}
+			self.response.set_status(401, message="Unauthenticated... wrong email and/or password")
 			self.response.out.write(json.dumps(response))
 
 class UserLogout(Handlers):
