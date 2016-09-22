@@ -1,5 +1,8 @@
 import webapp2
 from functools import wraps
+from utils.token_hashing import TokenHashing
+from models.user import User
+import json
 
 class Handlers(webapp2.RequestHandler):
 	def set_secure_cookie(self, name, value):
@@ -19,9 +22,34 @@ class Handlers(webapp2.RequestHandler):
 def authenticate_user(f):
 	@wraps(f)
 	def wrapper(self):
-		adminid = self.read_secure_cookie('uid')
-		if adminid:
-			f(self)
+		access_token = self.request.get("access_token")
+		user_id = TokenHashing().check_secure_value(access_token)
+		print user_id
+		if user_id:
+			self.user = User.get_by_id(int(user_id))
+			print self.user
+			if self.user:
+				if self.user.session:
+					f(self)
+				else:
+					response = {
+						"status": "fail",
+						"message": "Forbidden"
+					}
+					self.response.set_status(403, message="Forbidden")
+					self.response.out.write(json.dumps(response))
+			else:
+				response = {
+					"status": "fail",
+					"message": "Forbidden"
+				}
+				self.response.set_status(403, message="Forbidden")
+				self.response.out.write(json.dumps(response))
 		else:
-			self.redirect('/')
+			response = {
+				"status": "fail",
+				"message": "Forbidden"
+			}
+			self.response.set_status(403, message="Forbidden")
+			self.response.out.write(json.dumps(response))
 	return wrapper

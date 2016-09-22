@@ -1,6 +1,6 @@
 import json
 from base_controller import Handlers
-from models import *
+from models import User
 
 class UserRegister(Handlers):
 	def post(self):
