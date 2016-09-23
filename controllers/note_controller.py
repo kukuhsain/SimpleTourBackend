@@ -11,18 +11,14 @@ class NoteAdd(Handlers):
 
 		self.response.headers['Content-Type'] = 'application/json'
 		note = Note.add(user=self.user, title=title, content=content)
-		if note:
-			response = {
-				"status": "success",
-				"message": "Successfully add new note",
+		response = {
+			"note": {
+				"title": note.title,
+				"content": note.content,
+				"createdDate": note.created_date.isoformat(),
 			}
-			self.response.out.write(json.dumps(response))
-		else:
-			response = {
-				"status": "fail",
-				"message": "Failed to add note",
-			}
-			self.response.out.write(json.dumps(response))
+		}
+		self.response.out.write(json.dumps(response))
 
 class NoteGetAll(Handlers):
 	@authenticate_user
