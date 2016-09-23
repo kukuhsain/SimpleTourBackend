@@ -37,7 +37,7 @@ class NoteGenerator():
 
     def get_all(self):
         url = self.base_url + "/note/getall"
-        r = requests.get(url, data=self._get_dict_data())
+        r = requests.get(url, params=self._get_dict_access_token())
         print r
         print r.text
 

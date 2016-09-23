@@ -16,14 +16,14 @@ class Note(ndb.Model):
 
 	@classmethod
 	def get_all_by_specific_user(cls, user):
-		parent = user.key
-		notes = cls.query(cls.parent==parent).fetch()
+		ancestor = user.key
+		notes = cls.query(ancestor=ancestor).fetch()
 		return notes
 
 	@classmethod
 	def get_some_by_specific_user(cls, user, amount):
-		parent = user.key
-		notes = cls.query(cls.parent==parent).fetch(amount)
+		ancestor = user.key
+		notes = cls.query(ancestor=ancestor).fetch(amount)
 		return notes
 
 	@classmethod

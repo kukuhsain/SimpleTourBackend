@@ -34,3 +34,4 @@ Duis consectetur urna vitae elit dapibus mattis. Phasellus vel sem hendrerit eni
 # Test for note
 note = NoteGenerator(base_url, access_token, title, content)
 note.add()
+note.get_all()

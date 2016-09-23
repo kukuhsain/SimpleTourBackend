@@ -26,25 +26,21 @@ class NoteAdd(Handlers):
 
 class NoteGetAll(Handlers):
 	@authenticate_user
-	def post(self):
-		username = self.request.get("email")
-		password = self.request.get("password")
-
-		access_token = User.login(username, password)
+	def get(self):
+		notes = Note.get_all_by_specific_user(user=self.user)
 		self.response.headers['Content-Type'] = 'application/json'
-		if access_token:
+		if notes:
 			response = {
 				"status": "success",
-				"message": "Login Successfully",
-				"access_token": access_token,
+				"message": "Successfully get all notes",
 			}
 			self.response.out.write(json.dumps(response))
 		else:
 			response = {
-				"status": "fail",
-				"message": "Login failed, wrong email and/or password",
+				"status": "empty",
+				"message": "Empty",
 			}
-			self.response.set_status(401, message="Unauthenticated... wrong email and/or password")
+			self.response.set_status(204)
 			self.response.out.write(json.dumps(response))
 
 class NoteGetSome(Handlers):
