@@ -5,26 +5,42 @@ from models.user import User
 import json
 
 class Handlers(webapp2.RequestHandler):
-	def _raise_401_response(self, message="Failed Authentication"):
+	def _raise_401_response(self, description="Failed Authentication"):
 		response = {
-			"status": "fail",
-			"message": message,
+			"error": {
+				"code": "unauthorized",
+				"description": description,
+			}
 		}
 		self.response.set_status(401)
 		self.response.out.write(json.dumps(response))
 
-	def _raise_403_response(self, message="Forbidden"):
+	def _raise_403_response(self, description="Forbidden"):
 		response = {
-			"status": "fail",
-			"message": message,
+			"error": {
+				"code": "forbidden",
+				"description": description,
+			}
 		}
 		self.response.set_status(403)
 		self.response.out.write(json.dumps(response))
 
-	def _raise_500_response(self, message="Internal Server Error"):
+	def _raise_404_response(self, description="Not Found"):
 		response = {
-			"status": "fail",
-			"message": message,
+			"error": {
+				"code": "not found",
+				"description": description,
+			}
+		}
+		self.response.set_status(404)
+		self.response.out.write(json.dumps(response))
+
+	def _raise_500_response(self, description="Internal Server Error"):
+		response = {
+			"error": {
+				"code": "server error",
+				"description": description,
+			}
 		}
 		self.response.set_status(500)
 		self.response.out.write(json.dumps(response))
