@@ -13,6 +13,7 @@ class NoteAdd(Handlers):
 		note = Note.add(user=self.user, title=title, content=content)
 		response = {
 			"note": {
+				"_id": note.key.id(),
 				"title": note.title,
 				"content": note.content,
 				"createdDate": note.created_date.isoformat(),
@@ -29,6 +30,7 @@ class NoteGetAll(Handlers):
 		list_of_json_notes = []
 		for note in notes:
 			list_of_json_notes.append({
+				"_id": note.key.id(),
 				"title": note.title,
 				"content": note.content,
 				"createdDate": note.created_date.isoformat(),
@@ -40,7 +42,7 @@ class NoteGetAll(Handlers):
 
 class NoteGetSome(Handlers):
 	@authenticate_user
-	def get(self, user_key):
+	def get(self):
 		self.response.headers['Content-Type'] = 'application/json'
 		if status:
 			response = {
