@@ -29,19 +29,18 @@ class NoteGetAll(Handlers):
 	def get(self):
 		notes = Note.get_all_by_specific_user(user=self.user)
 		self.response.headers['Content-Type'] = 'application/json'
-		if notes:
-			response = {
-				"status": "success",
-				"message": "Successfully get all notes",
-			}
-			self.response.out.write(json.dumps(response))
-		else:
-			response = {
-				"status": "empty",
-				"message": "Empty",
-			}
-			self.response.set_status(204)
-			self.response.out.write(json.dumps(response))
+
+		list_of_json_notes = []
+		for note in notes:
+			list_of_json_notes.append({
+				"title": note.title,
+				"content": note.content,
+				"createdDate": note.created_date.isoformat(),
+			})
+		response = {
+			"notes": list_of_json_notes,
+		}
+		self.response.out.write(json.dumps(response))
 
 class NoteGetSome(Handlers):
 	@authenticate_user
