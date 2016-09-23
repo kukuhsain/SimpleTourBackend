@@ -17,18 +17,9 @@ class UserRegister(Handlers):
 				}
 				self.response.out.write(json.dumps(response))
 			else:
-				response = {
-					"status": "fail",
-					"message": "Email is not available"
-				}
-				self.response.out.write(json.dumps(response))
+				self._raise_500_response("Email is not available")
 		else:
-			error = ""
-			response = {
-				"status": "fail",
-				"message": "You must fill all inputs of the form"
-			}
-			self.response.out.write(json.dumps(response))
+			self._raise_500_response("You must fill all inputs of the form")
 
 class UserLogin(Handlers):
 	def post(self):
@@ -45,12 +36,7 @@ class UserLogin(Handlers):
 			}
 			self.response.out.write(json.dumps(response))
 		else:
-			response = {
-				"status": "fail",
-				"message": "Login failed, wrong email and/or password"
-			}
-			self.response.set_status(401, message="Unauthenticated... wrong email and/or password")
-			self.response.out.write(json.dumps(response))
+			self._raise_401_response("Login failed, wrong email and/or password")
 
 class UserLogout(Handlers):
 	def post(self):
@@ -65,9 +51,4 @@ class UserLogout(Handlers):
 			}
 			self.response.out.write(json.dumps(response))
 		else:
-			response = {
-				"status": "fail",
-				"message": "Logout failed"
-			}
-			self.response.set_status(403, message="Forbidden")
-			self.response.out.write(json.dumps(response))
+			self._raise_403_response("Logout Failed")

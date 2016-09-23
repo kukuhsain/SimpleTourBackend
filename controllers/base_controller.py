@@ -5,13 +5,30 @@ from models.user import User
 import json
 
 class Handlers(webapp2.RequestHandler):
-	def _raise_403_response(self):
+	def _raise_401_response(self, message="Failed Authentication"):
 		response = {
 			"status": "fail",
-			"message": "Forbidden"
+			"message": message,
 		}
-		self.response.set_status(403, message="Forbidden")
+		self.response.set_status(401)
 		self.response.out.write(json.dumps(response))
+
+	def _raise_403_response(self, message="Forbidden"):
+		response = {
+			"status": "fail",
+			"message": message,
+		}
+		self.response.set_status(403)
+		self.response.out.write(json.dumps(response))
+
+	def _raise_500_response(self, message="Internal Server Error"):
+		response = {
+			"status": "fail",
+			"message": message,
+		}
+		self.response.set_status(500)
+		self.response.out.write(json.dumps(response))
+
 
 def authenticate_user(f):
 	@wraps(f)
