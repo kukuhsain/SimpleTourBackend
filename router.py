@@ -8,9 +8,9 @@ app = webapp2.WSGIApplication([
 	('/user/login', UserLogin),
 	('/user/logout', UserLogout),
 
-	('/note/add', NoteAdd),
-	('/note/getall', NoteGetAll),
-	('/note/getsome', NoteGetSome),
-	('/note/update', NoteUpdate),
-	('/note/delete', NoteDelete),
+	('/destination/add', DestinationAdd),
+	('/destination/getall', DestinationGetAll),
+	('/destination/getsome', DestinationGetSome),
+	('/destination/update', DestinationUpdate),
+	('/destination/delete', DestinationDelete),
 	], debug=True)

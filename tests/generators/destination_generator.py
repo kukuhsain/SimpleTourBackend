@@ -1,7 +1,7 @@
 import requests
 
 
-class NoteGenerator:
+class DestinationGenerator:
     def __init__(self, base_url, access_token, title, content):
         self.base_url = base_url
         self.access_token = access_token
@@ -50,7 +50,7 @@ class NoteGenerator:
         print r.text
 
     def delete(self):
-        url = self.base_url + "/user/logout"
+        url = self.base_url + "/note/delete"
         r = requests.post(url, data={"access_token": self.access_token})
         print r
         print r.text

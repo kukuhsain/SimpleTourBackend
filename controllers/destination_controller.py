@@ -1,9 +1,9 @@
 import json
 from base_controller import Handlers, authenticate_user
-from models import User, Note
+from models import User, Destination
 
 
-class NoteAdd(Handlers):
+class DestinationAdd(Handlers):
     @authenticate_user
     def post(self):
         access_token = self.request.get("access_token")
@@ -11,82 +11,82 @@ class NoteAdd(Handlers):
         content = self.request.get("content")
 
         self.response.headers['Content-Type'] = 'application/json'
-        note = Note.add(user=self.user, title=title, content=content)
+        destination = Destination.add(user=self.user, title=title, content=content)
         response = {
-            "note": {
-                "_id": note.key.id(),
-                "title": note.title,
-                "content": note.content,
-                "createdDate": note.created_date.isoformat(),
+            "destination": {
+                "_id": destination.key.id(),
+                "title": destination.title,
+                "content": destination.content,
+                "createdDate": destination.created_date.isoformat(),
             }
         }
         self.response.out.write(json.dumps(response))
 
 
-class NoteGetAll(Handlers):
+class DestinationGetAll(Handlers):
     @authenticate_user
     def get(self):
-        notes = Note.get_all_by_specific_user(user=self.user)
+        destinations = Destination.get_all_by_specific_user(user=self.user)
         self.response.headers['Content-Type'] = 'application/json'
 
-        list_of_json_notes = []
-        for note in notes:
-            list_of_json_notes.append({
-                "_id": note.key.id(),
-                "title": note.title,
-                "content": note.content,
-                "createdDate": note.created_date.isoformat(),
+        list_of_json_destinations = []
+        for destination in destinations:
+            list_of_json_destinations.append({
+                "_id": destination.key.id(),
+                "title": destination.title,
+                "content": destination.content,
+                "createdDate": destination.created_date.isoformat(),
             })
         response = {
-            "notes": list_of_json_notes,
+            "destinations": list_of_json_destinations,
         }
         self.response.out.write(json.dumps(response))
 
 
-class NoteGetSome(Handlers):
+class DestinationGetSome(Handlers):
     @authenticate_user
     def get(self):
         self.response.headers['Content-Type'] = 'application/json'
 
 
-class NoteUpdate(Handlers):
+class DestinationUpdate(Handlers):
     @authenticate_user
     def post(self, user_key):
-        note_id = self.request.get("note-id")
+        destination_id = self.request.get("destination-id")
         title = self.request.get("title")
         content = self.request.get("content")
-        note_id = self.request.get("note-id")
-        note_id = Note.update(note_id)
-        if note_id:
+        destination_id = self.request.get("destination-id")
+        destination_id = Destination.update(destination_id)
+        if destination_id:
             response = {
                 "status": "success",
-                "message": "Delete note successfully",
+                "message": "Delete destination successfully",
             }
             self.response.out.write(json.dumps(response))
         else:
             response = {
                 "status": "fail",
-                "message": "Failed to delete note",
+                "message": "Failed to delete destination",
             }
             self.response.set_status(403, message="Forbidden")
             self.response.out.write(json.dumps(response))
 
 
-class NoteDelete(Handlers):
+class DestinationDelete(Handlers):
     @authenticate_user
     def post(self, user_key):
-        note_id = self.request.get("note-id")
-        note_id = Note.delete(note_id)
-        if note_id:
+        destination_id = self.request.get("destination-id")
+        destination_id = Destination.delete(destination_id)
+        if destination_id:
             response = {
                 "status": "success",
-                "message": "Delete note successfully",
+                "message": "Delete destination successfully",
             }
             self.response.out.write(json.dumps(response))
         else:
             response = {
                 "status": "fail",
-                "message": "Failed to delete note",
+                "message": "Failed to delete destination",
             }
             self.response.set_status(403, message="Forbidden")
             self.response.out.write(json.dumps(response))

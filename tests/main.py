@@ -31,7 +31,7 @@ content = """Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec erat
 
 Duis consectetur urna vitae elit dapibus mattis. Phasellus vel sem hendrerit enim molestie pulvinar. Nullam suscipit lacus purus, eu luctus mi iaculis sed. Vivamus eu est sapien. Praesent vehicula augue id cursus iaculis. Proin eu erat mauris. Aliquam eu felis ullamcorper, sodales eros at, blandit ante. Quisque bibendum euismod metus. Integer sit amet nibh non elit mattis semper. Nunc tincidunt tortor sit amet ultricies dignissim. Maecenas ipsum nunc, sagittis vel facilisis quis, gravida ac diam. Phasellus a maximus diam, vitae volutpat nisi."""
 
-# Test for note
-note = NoteGenerator(base_url, access_token, title, content)
-note.add()
-note.get_all()
+# Test for destination
+destination = DestinationGenerator(base_url, access_token, title, content)
+destination.add()
+destination.get_all()
