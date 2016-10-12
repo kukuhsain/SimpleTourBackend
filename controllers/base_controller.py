@@ -52,7 +52,7 @@ def authenticate_user(f):
     def wrapper(self):
         access_token = self.request.get("access_token")
         print access_token
-        user_id = TokenHashing().check_secure_value(access_token)
+        user_id = TokenHashing.check_secure_value(access_token)
         print user_id
         if user_id:
             self.user = User.get_by_id(int(user_id))

@@ -23,7 +23,7 @@ class User(ndb.Model):
     @classmethod
     def register(cls, email, password):
         if cls._check_email_availability(email):
-            hashed_password = PasswordHashing().make_hashing_password(email, password)
+            hashed_password = PasswordHashing.make_hashing_password(email, password)
             user = cls(email=email, password=hashed_password, session=False)
             user.put()
             return user.key.id()
@@ -34,11 +34,11 @@ class User(ndb.Model):
     def login(cls, email, password):
         user = cls._get_user_by_email(email)
         if user:
-            password_validation_result = PasswordHashing().validate_password(email, password, user.password)
+            password_validation_result = PasswordHashing.validate_password(email, password, user.password)
             if password_validation_result:
                 user.session = True
                 user.put()
-                return TokenHashing().make_secure_value(str(user.key.id()))
+                return TokenHashing.make_secure_value(str(user.key.id()))
             else:
                 return False
         else:
@@ -46,7 +46,7 @@ class User(ndb.Model):
 
     @classmethod
     def logout(cls, access_token):
-        user_id = TokenHashing().check_secure_value(access_token)
+        user_id = TokenHashing.check_secure_value(access_token)
         if user_id:
             user = cls.get_by_id(user_id)
             if user:
