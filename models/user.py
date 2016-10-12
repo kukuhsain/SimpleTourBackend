@@ -2,6 +2,7 @@ from google.appengine.ext import ndb
 from utils.password_hashing import PasswordHashing
 from utils.token_hashing import TokenHashing
 
+
 class User(ndb.Model):
     email = ndb.StringProperty(required=True)
     password = ndb.StringProperty(required=True)
@@ -17,7 +18,7 @@ class User(ndb.Model):
 
     @classmethod
     def _get_user_by_email(cls, email):
-        return cls.query(cls.email==email).get()
+        return cls.query(cls.email == email).get()
 
     @classmethod
     def register(cls, email, password):

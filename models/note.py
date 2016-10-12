@@ -2,6 +2,7 @@ from google.appengine.ext import ndb
 from utils.password_hashing import PasswordHashing
 from utils.token_hashing import TokenHashing
 
+
 class Note(ndb.Model):
     title = ndb.StringProperty()
     content = ndb.TextProperty()

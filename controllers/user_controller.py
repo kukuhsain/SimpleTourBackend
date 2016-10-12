@@ -2,6 +2,7 @@ import json
 from base_controller import Handlers
 from models import User
 
+
 class UserRegister(Handlers):
     def post(self):
         email = self.request.get("email")
@@ -21,6 +22,7 @@ class UserRegister(Handlers):
         else:
             self._raise_500_response("You must fill all inputs of the form")
 
+
 class UserLogin(Handlers):
     def post(self):
         username = self.request.get("email")
@@ -37,6 +39,7 @@ class UserLogin(Handlers):
             self.response.out.write(json.dumps(response))
         else:
             self._raise_401_response("Login failed, wrong email and/or password")
+
 
 class UserLogout(Handlers):
     def post(self):

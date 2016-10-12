@@ -2,6 +2,7 @@ import json
 from base_controller import Handlers, authenticate_user
 from models import User, Note
 
+
 class NoteAdd(Handlers):
     @authenticate_user
     def post(self):
@@ -20,6 +21,7 @@ class NoteAdd(Handlers):
             }
         }
         self.response.out.write(json.dumps(response))
+
 
 class NoteGetAll(Handlers):
     @authenticate_user
@@ -40,24 +42,12 @@ class NoteGetAll(Handlers):
         }
         self.response.out.write(json.dumps(response))
 
-class NoteGetSome(Handlers):
 
+class NoteGetSome(Handlers):
     @authenticate_user
     def get(self):
         self.response.headers['Content-Type'] = 'application/json'
-        if status:
-            response = {
-                "status": "success",
-                "data": "Logout Successfully",
-            }
-            self.response.out.write(json.dumps(response))
-        else:
-            response = {
-                "status": "fail",
-                "message": "",
-            }
-            self.response.set_status(403, message="Forbidden")
-            self.response.out.write(json.dumps(response))
+
 
 class NoteUpdate(Handlers):
     @authenticate_user
@@ -80,6 +70,7 @@ class NoteUpdate(Handlers):
             }
             self.response.set_status(403, message="Forbidden")
             self.response.out.write(json.dumps(response))
+
 
 class NoteDelete(Handlers):
     @authenticate_user

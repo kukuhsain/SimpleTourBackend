@@ -1,11 +1,13 @@
 import requests
 
-class NoteGenerator():
+
+class NoteGenerator:
     def __init__(self, base_url, access_token, title, content):
         self.base_url = base_url
         self.access_token = access_token
         self.title = title
         self.content = content
+
 
     def _get_dict_access_token(self):
         return {

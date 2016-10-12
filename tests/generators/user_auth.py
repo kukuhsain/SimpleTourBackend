@@ -1,6 +1,7 @@
 import requests
 
-class UserAuth():
+
+class UserAuth:
     def __init__(self, base_url, email, password):
         self.base_url = base_url
         self.email = email

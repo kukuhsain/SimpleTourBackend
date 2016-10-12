@@ -2,17 +2,21 @@ import hashlib
 import random
 from string import letters
 
-class PasswordHashing():
-    def make_salt(self, length=5):
+
+class PasswordHashing:
+    @classmethod
+    def make_salt(cls, length=5):
         return ''.join(random.choice(letters) for x in xrange(length))
 
-    def make_hashing_password(self, name, password, salt=None):
+    @classmethod
+    def make_hashing_password(cls, name, password, salt=None):
         if not salt:
-            salt = self.make_salt()
+            salt = cls.make_salt()
             print 'salt: '+salt
         h = hashlib.sha256(str(name)+str(password)+str(salt)).hexdigest()
         return '%s,%s' % (salt, h)
-
-    def validate_password(self, name, password, h):
+    
+    @classmethod
+    def validate_password(cls, name, password, h):
         salt = h.split(',')[0]
-        return h == self.make_hashing_password(name, password, salt)
+        return h == cls.make_hashing_password(name, password, salt)

@@ -4,6 +4,7 @@ from utils.token_hashing import TokenHashing
 from models.user import User
 import json
 
+
 class Handlers(webapp2.RequestHandler):
     def _raise_401_response(self, description="Failed Authentication"):
         response = {
