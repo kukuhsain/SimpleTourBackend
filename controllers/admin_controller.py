@@ -1,57 +1,53 @@
 import json
-from base_controller import Handlers
-from models.user_guest import UserGuest
+
+from controllers.base_controller import Handlers
+from models.admin import Admin
 from utils.token_hashing import TokenHashing
 
 
-class UserRegister(Handlers):
+class AdminRegister(Handlers):
     def post(self):
         email = self.request.get("email")
         password = self.request.get("password")
 
-        self.response.headers['Content-Type'] = 'application/json'
         if email and password:
-            user = UserGuest.register(email, password)
-            if user:
+            userid = Admin.register(email, password)
+            if userid:
                 response = {
                     "status": "success",
-                    "message": "Successfully registering a new user",
-                    "access_token": TokenHashing.make_secure_value(str(user.key.id()))
+                    "message": "Successfully registering a new user"
                 }
-                self._response_json(response)
+                self.response.out.write(json.dumps(response))
             else:
                 self._raise_500_response("Email is not available")
         else:
             self._raise_500_response("You must fill all inputs of the form")
 
 
-class UserLogin(Handlers):
+class AdminLogin(Handlers):
     def post(self):
-        username = self.request.get("email")
+        email = self.request.get("email")
         password = self.request.get("password")
 
-        user = UserGuest.login(username, password)
-        if user:
+        admin = Admin.login(email, password)
+        if admin:
             response = {
                 "status": "success",
                 "message": "Login Successfully",
-                "access_token": TokenHashing.make_secure_value(str(user.key.id()))
+                "access_token": TokenHashing.make_secure_value(str(admin.key.id())),
             }
             self._response_json(response)
         else:
             self._raise_401_response("Login failed, wrong email and/or password")
 
 
-class UserLogout(Handlers):
+class AdminLogout(Handlers):
     def post(self):
-        access_token = self.request.get("access_token")
-        print access_token
-        status = UserGuest.logout(access_token)
-        if status:
+        admin = self._authenticate_admin()
+        if admin:
+            Admin.logout(admin)
             response = {
                 "status": "success",
                 "message": "Logout Successfully",
             }
             self._response_json(response)
-        else:
-            self._raise_403_response("Logout Failed")

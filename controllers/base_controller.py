@@ -1,11 +1,18 @@
 import webapp2
-from functools import wraps
-from utils.token_hashing import TokenHashing
-from models.user import User
 import json
+
+from functools import wraps
+
+from models.admin import Admin
+from utils.token_hashing import TokenHashing
+from models.user_guest import UserGuest
 
 
 class Handlers(webapp2.RequestHandler):
+    def _response_json(self, dict_response):
+        self.response.headers["Content-Type"] = "application/json"
+        self.response.out.write(json.dumps(dict_response))
+
     def _raise_401_response(self, description="Failed Authentication"):
         response = {
             "error": {
@@ -14,7 +21,7 @@ class Handlers(webapp2.RequestHandler):
             }
         }
         self.response.set_status(401)
-        self.response.out.write(json.dumps(response))
+        self._response_json(response)
 
     def _raise_403_response(self, description="Forbidden"):
         response = {
@@ -24,7 +31,7 @@ class Handlers(webapp2.RequestHandler):
             }
         }
         self.response.set_status(403)
-        self.response.out.write(json.dumps(response))
+        self._response_json(response)
 
     def _raise_404_response(self, description="Not Found"):
         response = {
@@ -34,7 +41,7 @@ class Handlers(webapp2.RequestHandler):
             }
         }
         self.response.set_status(404)
-        self.response.out.write(json.dumps(response))
+        self._response_json(response)
 
     def _raise_500_response(self, description="Internal Server Error"):
         response = {
@@ -44,26 +51,32 @@ class Handlers(webapp2.RequestHandler):
             }
         }
         self.response.set_status(500)
-        self.response.out.write(json.dumps(response))
+        self._response_json(response)
 
-
-def authenticate_user(f):
-    @wraps(f)
-    def wrapper(self):
+    def _authenticate_admin(self):
         access_token = self.request.get("access_token")
-        print access_token
-        user_id = TokenHashing.check_secure_value(access_token)
-        print user_id
-        if user_id:
-            self.user = User.get_by_id(int(user_id))
-            print self.user
-            if self.user:
-                if self.user.session:
-                    f(self)
-                else:
-                    self._raise_403_response()
+        admin_id = TokenHashing.check_secure_value(access_token)
+        if admin_id:
+            admin = Admin.get_by_id(int(admin_id))
+            if admin.session:
+                return admin
             else:
                 self._raise_403_response()
+                return False
         else:
             self._raise_403_response()
-    return wrapper
+            return False
+
+    def _authenticate_user_guest(self):
+        access_token = self.request.get("access_token")
+        user_id = TokenHashing.check_secure_value(access_token)
+        if user_id:
+            user = UserGuest.get_by_id(int(user_id))
+            if user.session:
+                return user
+            else:
+                self._raise_403_response()
+                return False
+        else:
+            self._raise_403_response()
+            return False

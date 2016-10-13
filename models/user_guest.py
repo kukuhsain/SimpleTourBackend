@@ -3,9 +3,12 @@ from utils.password_hashing import PasswordHashing
 from utils.token_hashing import TokenHashing
 
 
-class User(ndb.Model):
+class UserGuest(ndb.Model):
     email = ndb.StringProperty(required=True)
     password = ndb.StringProperty(required=True)
+    name = ndb.StringProperty()
+    phone = ndb.StringProperty()
+    image_url = ndb.StringProperty()
     session = ndb.BooleanProperty()
     created_date = ndb.DateTimeProperty(auto_now_add=True)
 
@@ -21,12 +24,12 @@ class User(ndb.Model):
         return cls.query(cls.email == email).get()
 
     @classmethod
-    def register(cls, email, password):
+    def register(cls, email, password, name):
         if cls._check_email_availability(email):
             hashed_password = PasswordHashing.make_hashing_password(email, password)
-            user = cls(email=email, password=hashed_password, session=False)
+            user = cls(email=email, password=hashed_password, name=name, session=False)
             user.put()
-            return user.key.id()
+            return user
         else:
             return False
 
@@ -38,11 +41,20 @@ class User(ndb.Model):
             if password_validation_result:
                 user.session = True
                 user.put()
-                return TokenHashing.make_secure_value(str(user.key.id()))
+                return user
             else:
                 return False
         else:
             return False
+
+    @classmethod
+    def update_profile(cls, access_token, name, phone):
+        user = cls.get_by_id(user_id)
+        if user:
+            user.name = name
+            user.phone = phone
+        else:
+            False
 
     @classmethod
     def logout(cls, access_token):

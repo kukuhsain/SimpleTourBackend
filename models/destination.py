@@ -6,33 +6,34 @@ from utils.token_hashing import TokenHashing
 class Destination(ndb.Model):
     title = ndb.StringProperty()
     content = ndb.TextProperty()
+    location = ndb.StringProperty()
+    image = ndb.BlobProperty()
     created_date = ndb.DateTimeProperty(auto_now_add=True)
+    updated_date = ndb.DateTimeProperty(auto_now=True)
 
     @classmethod
-    def add(cls, user, title, content):
-        parent = user.key
-        destination = cls(parent=parent, title=title, content=content)
+    def add(cls, title, content, location, image):
+        if not image:
+            image = None
+        destination = cls(title=title, content=content, location=location, image=image)
         destination.put()
         return destination
 
     @classmethod
-    def get_all_by_specific_user(cls, user):
-        ancestor = user.key
-        destinations = cls.query(ancestor=ancestor).fetch()
+    def get_all(cls):
+        destinations = cls.query().fetch()
         return destinations
 
     @classmethod
-    def get_some_by_specific_user(cls, user, amount):
-        ancestor = user.key
-        destinations = cls.query(ancestor=ancestor).fetch(amount)
-        return destinations
-
-    @classmethod
-    def update(cls, user, destination_id, title, content):
+    def update(cls, destination_id, title, content, location, image):
         destination = cls.get_by_id(int(destination_id))
+        if not image:
+            image = None
         if destination:
             destination.title = title
             destination.content = content
+            destination.location = location
+            destination.image = image
             destination.put()
             return destination
         else:

@@ -8,7 +8,6 @@ class DestinationGenerator:
         self.title = title
         self.content = content
 
-
     def _get_dict_access_token(self):
         return {
             "access_token": self.access_token
@@ -40,12 +39,6 @@ class DestinationGenerator:
     def get_all(self):
         url = self.base_url + "/destination/getall"
         r = requests.get(url, params=self._get_dict_access_token())
-        print r
-        print r.text
-
-    def get_some(self):
-        url = self.base_url + "/destination/getsome"
-        r = requests.get(url, data=self._get_dict_data())
         print r
         print r.text
 
