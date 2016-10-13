@@ -31,26 +31,26 @@ class DestinationGenerator:
         return self.access_token
 
     def add(self):
-        url = self.base_url + "/note/add"
+        url = self.base_url + "/destination/add"
         print self._get_dict_data()
         r = requests.post(url, data=self._get_dict_data())
         print r
         print r.text
 
     def get_all(self):
-        url = self.base_url + "/note/getall"
+        url = self.base_url + "/destination/getall"
         r = requests.get(url, params=self._get_dict_access_token())
         print r
         print r.text
 
     def get_some(self):
-        url = self.base_url + "/note/getsome"
+        url = self.base_url + "/destination/getsome"
         r = requests.get(url, data=self._get_dict_data())
         print r
         print r.text
 
     def delete(self):
-        url = self.base_url + "/note/delete"
+        url = self.base_url + "/destination/delete"
         r = requests.post(url, data={"access_token": self.access_token})
         print r
         print r.text
