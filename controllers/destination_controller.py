@@ -19,8 +19,8 @@ class DestinationAdd(Handlers):
                     "title": destination.title,
                     "content": destination.content,
                     "location": destination.location,
-
-                    "createdDate": destination.created_date.isoformat(),
+                    "image_url": "/image?image_id=" + destination.image_id,
+                    "created_date": destination.created_date.isoformat(),
                 }
             }
             self._response_json(response)
@@ -35,7 +35,9 @@ class DestinationGetAll(Handlers):
                 "destination_id": destination.key.id(),
                 "title": destination.title,
                 "content": destination.content,
-                "createdDate": destination.created_date.isoformat(),
+                "location": destination.location,
+                "image_url": "/image?image_id=" + destination.image_id,
+                "created_date": destination.created_date.isoformat(),
             })
         response = {
             "destinations": list_of_json_destinations,
@@ -51,23 +53,28 @@ class DestinationUpdate(Handlers):
             title = self.request.get("title")
             content = self.request.get("content")
             location = self.request.get("location")
-            image = self.request.get("image")
 
-            destination = Destination.update(destination_id, title, content, location, image)
+            destination = Destination.update(destination_id, title, content, location)
             if destination:
                 response = {
-                    "destination": destination,
+                    "destination": {
+                        "destination_id": destination.key.id(),
+                        "title": destination.title,
+                        "content": destination.content,
+                        "location": destination.location,
+                        "image_url": "/image?image_id=" + destination.image_id,
+                        "created_date": destination.created_date.isoformat(),
+                    }
                 }
                 self._response_json(response)
             else:
-                self.response.set_status(403, message="Forbidden")
+                self._raise_500_response()
 
 class DestinationDelete(Handlers):
     def post(self, user_key):
         admin = self._authenticate_admin()
         if admin:
             destination_id = self.request.get("destination_id")
-
             result = Destination.delete(destination_id)
             if result:
                 response = {
@@ -76,4 +83,4 @@ class DestinationDelete(Handlers):
                 }
                 self._response_json(response)
             else:
-                self.response.set_status(403, message="Forbidden")
+                self._raise_500_response()
