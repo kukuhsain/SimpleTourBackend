@@ -11,8 +11,8 @@ class AdminRegister(Handlers):
         password = self.request.get("password")
 
         if email and password:
-            userid = Admin.register(email, password)
-            if userid:
+            admin = Admin.register(email, password)
+            if admin:
                 response = {
                     "status": "success",
                     "message": "Successfully registering a new user"
