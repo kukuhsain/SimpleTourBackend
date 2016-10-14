@@ -13,6 +13,10 @@ class Handlers(webapp2.RequestHandler):
         self.response.headers["Content-Type"] = "application/json"
         self.response.out.write(json.dumps(dict_response))
 
+    def _response_image(self, image):
+        self.response.headers["Content-Type"] = "image/*"
+        self.response.out.write(image)
+
     def _raise_401_response(self, description="Failed Authentication"):
         response = {
             "error": {
