@@ -8,3 +8,6 @@ handlers:
 
 - url: /.*
   script: router.app
+
+skip_files:
+- ^(tests/.*)
