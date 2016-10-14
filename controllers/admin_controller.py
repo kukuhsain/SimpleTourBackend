@@ -17,7 +17,7 @@ class AdminRegister(Handlers):
                     "status": "success",
                     "message": "Successfully registering a new user"
                 }
-                self.response.out.write(json.dumps(response))
+                self._response_json(response)
             else:
                 self._raise_500_response("Email is not available")
         else:
