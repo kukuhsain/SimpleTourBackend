@@ -18,6 +18,8 @@ class DestinationAdd(Handlers):
                     "destination_id": destination.key.id(),
                     "title": destination.title,
                     "content": destination.content,
+                    "location": destination.location,
+
                     "createdDate": destination.created_date.isoformat(),
                 }
             }
@@ -52,10 +54,9 @@ class DestinationUpdate(Handlers):
             image = self.request.get("image")
 
             destination = Destination.update(destination_id, title, content, location, image)
-            if destination_id:
+            if destination:
                 response = {
-                    "status": "success",
-                    "message": "Update destination successfully",
+                    "destination": destination,
                 }
                 self._response_json(response)
             else:
@@ -67,8 +68,8 @@ class DestinationDelete(Handlers):
         if admin:
             destination_id = self.request.get("destination_id")
 
-            destination_id = Destination.delete(destination_id)
-            if destination_id:
+            result = Destination.delete(destination_id)
+            if result:
                 response = {
                     "status": "success",
                     "message": "Delete destination successfully",
