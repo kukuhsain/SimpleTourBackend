@@ -19,7 +19,7 @@ class DestinationAdd(Handlers):
                     "title": destination.title,
                     "content": destination.content,
                     "location": destination.location,
-                    "image_url": "/image?image_id=" + destination.image_id,
+                    "image_url": "/image?image_id=" + str(destination.image_id),
                     "created_date": destination.created_date.isoformat(),
                 }
             }
@@ -36,7 +36,7 @@ class DestinationGetAll(Handlers):
                 "title": destination.title,
                 "content": destination.content,
                 "location": destination.location,
-                "image_url": "/image?image_id=" + destination.image_id,
+                "image_url": "/image?image_id=" + str(destination.image_id),
                 "created_date": destination.created_date.isoformat(),
             })
         response = {
@@ -62,7 +62,7 @@ class DestinationUpdate(Handlers):
                         "title": destination.title,
                         "content": destination.content,
                         "location": destination.location,
-                        "image_url": "/image?image_id=" + destination.image_id,
+                        "image_url": "/image?image_id=" + str(destination.image_id),
                         "created_date": destination.created_date.isoformat(),
                     }
                 }

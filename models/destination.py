@@ -9,7 +9,7 @@ class Destination(ndb.Model):
     title = ndb.StringProperty()
     content = ndb.TextProperty()
     location = ndb.StringProperty()
-    image_id = ndb.BlobProperty()
+    image_id = ndb.IntegerProperty()
     created_date = ndb.DateTimeProperty(auto_now_add=True)
     updated_date = ndb.DateTimeProperty(auto_now=True)
 
