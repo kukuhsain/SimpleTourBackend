@@ -41,6 +41,26 @@ class DestinationGetAll(Handlers):
         self._response_json(response)
 
 
+class DestinationGetOne(Handlers):
+    def get(self, destination_id):
+        if destination_id.isdigit():
+            destination = Destination.get_by_id(int(destination_id))
+            if destination:
+                response = {
+                    "destination_id": destination.key.id(),
+                    "title": destination.title,
+                    "content": destination.content,
+                    "location": destination.location,
+                    "image_url": "/image?image_id=" + str(destination.image_id),
+                    "created_date": destination.created_date.isoformat(),
+                }
+                self._response_json(response)
+            else:
+                self._raise_404_response()
+        else:
+            self._raise_404_response()
+
+
 class DestinationUpdate(Handlers):
     def post(self, user_key):
         admin = self._authenticate_admin()

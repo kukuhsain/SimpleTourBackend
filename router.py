@@ -1,7 +1,7 @@
 import webapp2
 
 from controllers.admin_controller import AdminRegister, AdminLogin, AdminLogout
-from controllers.destination_controller import DestinationAdd, DestinationUpdate, DestinationDelete
+from controllers.destination_controller import DestinationAdd, DestinationUpdate, DestinationDelete, DestinationGetOne
 from controllers.destination_controller import DestinationGetAll
 from controllers.home_controller import Home
 from controllers.image_controller import ImageGet
@@ -26,6 +26,7 @@ app = webapp2.WSGIApplication([
 
     ('/destination/add', DestinationAdd),
     ('/destinations', DestinationGetAll),
+    ('/destination/(.*)', DestinationGetOne),
     ('/destination/update', DestinationUpdate),
     ('/destination/delete', DestinationDelete),
     ], debug=True)
