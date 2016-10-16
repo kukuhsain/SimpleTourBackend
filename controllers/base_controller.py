@@ -19,40 +19,28 @@ class Handlers(webapp2.RequestHandler):
 
     def _raise_401_response(self, description="Failed Authentication"):
         response = {
-            "error": {
-                "code": "unauthorized",
-                "description": description,
-            }
+            "error": description,
         }
         self.response.set_status(401)
         self._response_json(response)
 
     def _raise_403_response(self, description="Forbidden"):
         response = {
-            "error": {
-                "code": "forbidden",
-                "description": description,
-            }
+            "error": description,
         }
         self.response.set_status(403)
         self._response_json(response)
 
     def _raise_404_response(self, description="Not Found"):
         response = {
-            "error": {
-                "code": "not found",
-                "description": description,
-            }
+            "error": description,
         }
         self.response.set_status(404)
         self._response_json(response)
 
     def _raise_500_response(self, description="Internal Server Error"):
         response = {
-            "error": {
-                "code": "server error",
-                "description": description,
-            }
+            "error": description,
         }
         self.response.set_status(500)
         self._response_json(response)

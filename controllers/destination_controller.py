@@ -14,14 +14,12 @@ class DestinationAdd(Handlers):
 
             destination = Destination.add(title, content, location, image)
             response = {
-                "destination": {
-                    "destination_id": destination.key.id(),
-                    "title": destination.title,
-                    "content": destination.content,
-                    "location": destination.location,
-                    "image_url": "/image?image_id=" + str(destination.image_id),
-                    "created_date": destination.created_date.isoformat(),
-                }
+                "destination_id": destination.key.id(),
+                "title": destination.title,
+                "content": destination.content,
+                "location": destination.location,
+                "image_url": "/image?image_id=" + str(destination.image_id),
+                "created_date": destination.created_date.isoformat(),
             }
             self._response_json(response)
 
@@ -39,9 +37,7 @@ class DestinationGetAll(Handlers):
                 "image_url": "/image?image_id=" + str(destination.image_id),
                 "created_date": destination.created_date.isoformat(),
             })
-        response = {
-            "destinations": list_of_json_destinations,
-        }
+        response = list_of_json_destinations
         self._response_json(response)
 
 
@@ -57,14 +53,12 @@ class DestinationUpdate(Handlers):
             destination = Destination.update(destination_id, title, content, location)
             if destination:
                 response = {
-                    "destination": {
-                        "destination_id": destination.key.id(),
-                        "title": destination.title,
-                        "content": destination.content,
-                        "location": destination.location,
-                        "image_url": "/image?image_id=" + str(destination.image_id),
-                        "created_date": destination.created_date.isoformat(),
-                    }
+                    "destination_id": destination.key.id(),
+                    "title": destination.title,
+                    "content": destination.content,
+                    "location": destination.location,
+                    "image_url": "/image?image_id=" + str(destination.image_id),
+                    "created_date": destination.created_date.isoformat(),
                 }
                 self._response_json(response)
             else:
