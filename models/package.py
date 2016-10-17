@@ -29,7 +29,7 @@ class Package(ndb.Model):
     @classmethod
     def get_all_by_ancestor(cls, destination):
         ancestor = destination.key
-        packages = cls.query(ancestor == ancestor).fetch()
+        packages = cls.query(ancestor=ancestor).fetch()
         return packages
 
     @classmethod
