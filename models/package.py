@@ -10,40 +10,47 @@ class Package(ndb.Model):
     content = ndb.TextProperty()
     location = ndb.StringProperty()
     image_id = ndb.IntegerProperty()
-    price = ndb.FloatProperty()
+    price = ndb.IntegerProperty()
     created_date = ndb.DateTimeProperty(auto_now_add=True)
     updated_date = ndb.DateTimeProperty(auto_now=True)
 
     @classmethod
-    def add(cls, title, content, location, image, price):
-        package = cls(title=title, content=content, location=location, price=price)
+    def add(cls, destination, title, content, location, image, price):
+        parent = destination.key
+        package = cls(parent=parent, title=title, content=content, location=location)
         if image:
             image_model = ImageModel.add(image)
             package.image_id = image_model.key.id()
+        if price.isdigit():
+            package.price = int(price)
         package.put()
         return package
 
     @classmethod
-    def get_all(cls):
-        packages = cls.query().fetch()
+    def get_all_by_ancestor(cls, destination):
+        ancestor = destination.key
+        packages = cls.query(ancestor == ancestor).fetch()
         return packages
 
     @classmethod
-    def update(cls, package_id, title, content, location, price):
-        package = cls.get_by_id(int(package_id))
+    def update(cls, destination, package_id, title, content, location, price):
+        parent = destination.key
+        package = cls.get_by_id(int(package_id), parent=parent)
         if package:
             package.title = title
             package.content = content
             package.location = location
-            package.price = price
+            if price.isdigit():
+                package.price = int(price)
             package.put()
             return package
         else:
             return False
 
     @classmethod
-    def delete(cls, package_id):
-        package = cls.get_by_id(int(package_id))
+    def delete(cls, destination, package_id):
+        parent = destination.key
+        package = cls.get_by_id(int(package_id), parent=parent)
         if package:
             package.key.delete()
             return True

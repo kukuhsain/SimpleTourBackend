@@ -61,7 +61,7 @@ class DestinationGetOne(Handlers):
 
 
 class DestinationUpdate(Handlers):
-    def post(self, user_key):
+    def post(self):
         admin = self._authenticate_admin()
         if admin:
             destination_id = self.request.get("destination_id")
@@ -84,7 +84,7 @@ class DestinationUpdate(Handlers):
                 self._raise_500_response()
 
 class DestinationDelete(Handlers):
-    def post(self, user_key):
+    def post(self):
         admin = self._authenticate_admin()
         if admin:
             destination_id = self.request.get("destination_id")
