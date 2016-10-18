@@ -50,8 +50,12 @@ class Handlers(webapp2.RequestHandler):
         admin_id = TokenHashing.check_secure_value(access_token)
         if admin_id:
             admin = Admin.get_by_id(int(admin_id))
-            if admin.session:
-                return admin
+            if admin:
+                if admin.session:
+                    return admin
+                else:
+                    self._raise_403_response()
+                    return False
             else:
                 self._raise_403_response()
                 return False
@@ -64,8 +68,12 @@ class Handlers(webapp2.RequestHandler):
         user_id = TokenHashing.check_secure_value(access_token)
         if user_id:
             user = UserGuest.get_by_id(int(user_id))
-            if user.session:
-                return user
+            if user:
+                if user.session:
+                    return user
+                else:
+                    self._raise_403_response()
+                    return False
             else:
                 self._raise_403_response()
                 return False
