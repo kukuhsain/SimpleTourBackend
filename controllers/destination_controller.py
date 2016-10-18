@@ -13,11 +13,11 @@ class DestinationAdd(Handlers):
 
             destination = Destination.add(title, content, location, image)
             response = {
-                "destination_id": destination.key.id(),
+                "destinationId": destination.key.id(),
                 "title": destination.title,
                 "content": destination.content,
                 "location": destination.location,
-                "image_url": "/image?image_id=" + str(destination.image_id),
+                "imageUrl": "/image?image_id=" + str(destination.image_id),
                 "created_date": destination.created_date.isoformat(),
             }
             self._response_json(response)
@@ -29,11 +29,11 @@ class DestinationGetAll(Handlers):
         list_of_json_destinations = []
         for destination in destinations:
             list_of_json_destinations.append({
-                "destination_id": destination.key.id(),
+                "destinationId": destination.key.id(),
                 "title": destination.title,
                 "content": destination.content,
                 "location": destination.location,
-                "image_url": "/image?image_id=" + str(destination.image_id),
+                "imageUrl": "/image?image_id=" + str(destination.image_id),
                 "created_date": destination.created_date.isoformat(),
             })
         response = list_of_json_destinations
@@ -46,11 +46,11 @@ class DestinationGetOne(Handlers):
             destination = Destination.get_by_id(int(destination_id))
             if destination:
                 response = {
-                    "destination_id": destination.key.id(),
+                    "destinationId": destination.key.id(),
                     "title": destination.title,
                     "content": destination.content,
                     "location": destination.location,
-                    "image_url": "/image?image_id=" + str(destination.image_id),
+                    "imageUrl": "/image?image_id=" + str(destination.image_id),
                     "created_date": destination.created_date.isoformat(),
                 }
                 self._response_json(response)
@@ -72,11 +72,11 @@ class DestinationUpdate(Handlers):
             destination = Destination.update(destination_id, title, content, location)
             if destination:
                 response = {
-                    "destination_id": destination.key.id(),
+                    "destinationId": destination.key.id(),
                     "title": destination.title,
                     "content": destination.content,
                     "location": destination.location,
-                    "image_url": "/image?image_id=" + str(destination.image_id),
+                    "imageUrl": "/image?image_id=" + str(destination.image_id),
                     "created_date": destination.created_date.isoformat(),
                 }
                 self._response_json(response)

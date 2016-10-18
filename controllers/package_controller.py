@@ -18,12 +18,12 @@ class PackageAdd(Handlers):
 
                     package = Package.add(destination, title, content, location, image, price)
                     response = {
-                        "package_id": package.key.id(),
+                        "packageId": package.key.id(),
                         "title": package.title,
                         "content": package.content,
                         "location": package.location,
                         "price": package.price,
-                        "image_url": "/image?image_id=" + str(package.image_id),
+                        "imageUrl": "/image?image_id=" + str(package.image_id),
                         "created_date": package.created_date.isoformat(),
                     }
                     self._response_json(response)
@@ -42,12 +42,12 @@ class PackageGetAll(Handlers):
                 list_of_json_packages = []
                 for package in packages:
                     list_of_json_packages.append({
-                        "package_id": package.key.id(),
+                        "packageId": package.key.id(),
                         "title": package.title,
                         "content": package.content,
                         "location": package.location,
                         "price": package.price,
-                        "image_url": "/image?image_id=" + str(package.image_id),
+                        "imageUrl": "/image?image_id=" + str(package.image_id),
                         "created_date": package.created_date.isoformat(),
                     })
                 response = list_of_json_packages
@@ -67,12 +67,12 @@ class PackageGetOne(Handlers):
                     package = Package.get_by_id(int(package_id), parent=destination.key)
                     if package:
                         response = {
-                            "package_id": package.key.id(),
+                            "packageId": package.key.id(),
                             "title": package.title,
                             "content": package.content,
                             "location": package.location,
                             "price": package.price,
-                            "image_url": "/image?image_id=" + str(package.image_id),
+                            "imageUrl": "/image?image_id=" + str(package.image_id),
                             "created_date": package.created_date.isoformat(),
                         }
                         self._response_json(response)
@@ -102,12 +102,12 @@ class PackageUpdate(Handlers):
                     package = Package.update(destination, package_id, title, content, location, price)
                     if package:
                         response = {
-                            "package_id": package.key.id(),
+                            "packageId": package.key.id(),
                             "title": package.title,
                             "content": package.content,
                             "location": package.location,
                             "price": package.price,
-                            "image_url": "/image?image_id=" + str(package.image_id),
+                            "imageUrl": "/image?image_id=" + str(package.image_id),
                             "created_date": package.created_date.isoformat(),
                         }
                         self._response_json(response)

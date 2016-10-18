@@ -34,7 +34,7 @@ class AdminLogin(Handlers):
             response = {
                 "status": "success",
                 "message": "Login Successfully",
-                "access_token": TokenHashing.make_secure_value(str(admin.key.id())),
+                "accessToken": TokenHashing.make_secure_value(str(admin.key.id())),
             }
             self._response_json(response)
         else:

@@ -16,7 +16,7 @@ class UserRegister(Handlers):
                 response = {
                     "status": "success",
                     "message": "Successfully registering a new user",
-                    "access_token": TokenHashing.make_secure_value(str(user.key.id()))
+                    "accessToken": TokenHashing.make_secure_value(str(user.key.id()))
                 }
                 self._response_json(response)
             else:
@@ -35,7 +35,7 @@ class UserLogin(Handlers):
             response = {
                 "status": "success",
                 "message": "Login Successfully",
-                "access_token": TokenHashing.make_secure_value(str(user.key.id()))
+                "accessToken": TokenHashing.make_secure_value(str(user.key.id()))
             }
             self._response_json(response)
         else:
