@@ -24,7 +24,7 @@ class PackageAdd(Handlers):
                         "location": package.location,
                         "price": package.price,
                         "imageUrl": "/image?image_id=" + str(package.image_id),
-                        "created_date": package.created_date.isoformat(),
+                        "createdDate": package.created_date.isoformat(),
                     }
                     self._response_json(response)
                 else:
@@ -48,7 +48,7 @@ class PackageGetAll(Handlers):
                         "location": package.location,
                         "price": package.price,
                         "imageUrl": "/image?image_id=" + str(package.image_id),
-                        "created_date": package.created_date.isoformat(),
+                        "createdDate": package.created_date.isoformat(),
                     })
                 response = list_of_json_packages
                 self._response_json(response)
@@ -73,7 +73,7 @@ class PackageGetOne(Handlers):
                             "location": package.location,
                             "price": package.price,
                             "imageUrl": "/image?image_id=" + str(package.image_id),
-                            "created_date": package.created_date.isoformat(),
+                            "createdDate": package.created_date.isoformat(),
                         }
                         self._response_json(response)
                     else:
@@ -108,7 +108,7 @@ class PackageUpdate(Handlers):
                             "location": package.location,
                             "price": package.price,
                             "imageUrl": "/image?image_id=" + str(package.image_id),
-                            "created_date": package.created_date.isoformat(),
+                            "createdDate": package.created_date.isoformat(),
                         }
                         self._response_json(response)
                     else:

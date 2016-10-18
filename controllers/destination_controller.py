@@ -18,7 +18,7 @@ class DestinationAdd(Handlers):
                 "content": destination.content,
                 "location": destination.location,
                 "imageUrl": "/image?image_id=" + str(destination.image_id),
-                "created_date": destination.created_date.isoformat(),
+                "createdDate": destination.created_date.isoformat(),
             }
             self._response_json(response)
 
@@ -34,7 +34,7 @@ class DestinationGetAll(Handlers):
                 "content": destination.content,
                 "location": destination.location,
                 "imageUrl": "/image?image_id=" + str(destination.image_id),
-                "created_date": destination.created_date.isoformat(),
+                "createdDate": destination.created_date.isoformat(),
             })
         response = list_of_json_destinations
         self._response_json(response)
@@ -51,7 +51,7 @@ class DestinationGetOne(Handlers):
                     "content": destination.content,
                     "location": destination.location,
                     "imageUrl": "/image?image_id=" + str(destination.image_id),
-                    "created_date": destination.created_date.isoformat(),
+                    "createdDate": destination.created_date.isoformat(),
                 }
                 self._response_json(response)
             else:
@@ -77,7 +77,7 @@ class DestinationUpdate(Handlers):
                     "content": destination.content,
                     "location": destination.location,
                     "imageUrl": "/image?image_id=" + str(destination.image_id),
-                    "created_date": destination.created_date.isoformat(),
+                    "createdDate": destination.created_date.isoformat(),
                 }
                 self._response_json(response)
             else:
