@@ -21,6 +21,8 @@ class DestinationAdd(Handlers):
                 "createdDate": destination.created_date.isoformat(),
             }
             self._response_json(response)
+        else:
+            self._raise_403_response()
 
 
 class DestinationGetAll(Handlers):
@@ -82,6 +84,8 @@ class DestinationUpdate(Handlers):
                 self._response_json(response)
             else:
                 self._raise_500_response()
+        else:
+            self._raise_403_response()
 
 class DestinationDelete(Handlers):
     def post(self):
@@ -97,3 +101,5 @@ class DestinationDelete(Handlers):
                 self._response_json(response)
             else:
                 self._raise_500_response()
+        else:
+            self._raise_403_response()

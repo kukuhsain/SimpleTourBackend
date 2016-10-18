@@ -31,6 +31,8 @@ class PackageAdd(Handlers):
                     self._raise_404_response()
             else:
                 self._raise_404_response()
+        else:
+            self._raise_403_response()
 
 
 class PackageGetAll(Handlers):
@@ -113,6 +115,13 @@ class PackageUpdate(Handlers):
                         self._response_json(response)
                     else:
                         self._raise_500_response()
+                else:
+                    self._raise_404_response()
+            else:
+                self._raise_404_response()
+        else:
+            self._raise_403_response()
+
 
 class PackageDelete(Handlers):
     def post(self, destination_id):
@@ -135,3 +144,5 @@ class PackageDelete(Handlers):
                     self._raise_404_response()
             else:
                 self._raise_404_response()
+        else:
+            self._raise_403_response()
