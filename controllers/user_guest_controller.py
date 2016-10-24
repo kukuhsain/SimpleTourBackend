@@ -4,14 +4,16 @@ from models.user_guest import UserGuest
 from utils.token_hashing import TokenHashing
 
 
-class UserRegister(Handlers):
+class UserGuestRegister(Handlers):
     def post(self):
         email = self.request.get("email")
         password = self.request.get("password")
+        name = self.request.get("name")
+        phone = self.request.get("phone")
 
         self.response.headers['Content-Type'] = 'application/json'
         if email and password:
-            user = UserGuest.register(email, password)
+            user = UserGuest.register(email, password, name, phone)
             if user:
                 response = {
                     "status": "success",
@@ -25,7 +27,7 @@ class UserRegister(Handlers):
             self._raise_500_response("You must fill all inputs of the form")
 
 
-class UserLogin(Handlers):
+class UserGuestLogin(Handlers):
     def post(self):
         username = self.request.get("email")
         password = self.request.get("password")
@@ -42,7 +44,7 @@ class UserLogin(Handlers):
             self._raise_401_response("Login failed, wrong email and/or password")
 
 
-class UserLogout(Handlers):
+class UserGuestLogout(Handlers):
     def post(self):
         access_token = self.request.get("access_token")
         print access_token

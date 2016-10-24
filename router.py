@@ -7,8 +7,8 @@ from controllers.home_controller import Home
 from controllers.image_controller import ImageGet
 from controllers.package_controller import PackageGetOne, PackageAdd, PackageGetAll, PackageUpdate, PackageDelete
 from controllers.reservation_controller import ReservationAdd, ReservationGetAll
-from controllers.user_controller import UserLogin
-from controllers.user_controller import UserRegister, UserLogout
+from controllers.user_guest_controller import UserGuestLogin
+from controllers.user_guest_controller import UserGuestRegister, UserGuestLogout
 
 
 app = webapp2.WSGIApplication([
@@ -19,10 +19,10 @@ app = webapp2.WSGIApplication([
     ('/admin/login', AdminLogin),
     ('/admin/logout', AdminLogout),
 
-    # User Section
-    ('/user/register', UserRegister),
-    ('/user/login', UserLogin),
-    ('/user/logout', UserLogout),
+    # User Guest Section
+    ('/guest/register', UserGuestRegister),
+    ('/guest/login', UserGuestLogin),
+    ('/guest/logout', UserGuestLogout),
 
     ('/image', ImageGet),
 

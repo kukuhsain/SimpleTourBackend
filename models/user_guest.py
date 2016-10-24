@@ -24,10 +24,10 @@ class UserGuest(ndb.Model):
         return cls.query(cls.email == email).get()
 
     @classmethod
-    def register(cls, email, password, name):
+    def register(cls, email, password, name, phone):
         if cls._check_email_availability(email):
             hashed_password = PasswordHashing.make_hashing_password(email, password)
-            user = cls(email=email, password=hashed_password, name=name, session=False)
+            user = cls(email=email, password=hashed_password, name=name, phone=phone, session=False)
             user.put()
             return user
         else:
