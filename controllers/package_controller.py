@@ -31,8 +31,6 @@ class PackageAdd(Handlers):
                     self._raise_404_response()
             else:
                 self._raise_404_response()
-        else:
-            self._raise_403_response()
 
 
 class PackageGetAll(Handlers):
@@ -119,8 +117,6 @@ class PackageUpdate(Handlers):
                     self._raise_404_response()
             else:
                 self._raise_404_response()
-        else:
-            self._raise_403_response()
 
 
 class PackageDelete(Handlers):
@@ -144,5 +140,3 @@ class PackageDelete(Handlers):
                     self._raise_404_response()
             else:
                 self._raise_404_response()
-        else:
-            self._raise_403_response()
