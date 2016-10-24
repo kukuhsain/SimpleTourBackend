@@ -1,8 +1,6 @@
 from google.appengine.ext import ndb
 
 from models.image_model import ImageModel
-from utils.password_hashing import PasswordHashing
-from utils.token_hashing import TokenHashing
 
 
 class Package(ndb.Model):
