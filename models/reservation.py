@@ -12,7 +12,7 @@ class Reservation(ndb.Model):
     def add(cls, guest, package, price_per_person, number_of_people):
         reservation = cls(guest_id=guest.key.id(), package_id=guest.key.id())
         if price_per_person.isdigit():
-            reservation.price_per_person = int(price_per_person)
+            reservation.price_per_person = float(price_per_person)
         if number_of_people.isdigit():
             reservation.number_of_people = int(number_of_people)
         reservation.put()
@@ -30,7 +30,7 @@ class Reservation(ndb.Model):
             reservation.guest_id = guest.key.id()
             reservation.package_id = package.key.id()
             if price_per_person.isdigit():
-                reservation.price_per_person = int(price_per_person)
+                reservation.price_per_person = float(price_per_person)
             if number_of_people.isdigit():
                 reservation.number_of_people = int(number_of_people)
             reservation.put()

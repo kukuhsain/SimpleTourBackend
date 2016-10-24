@@ -8,7 +8,7 @@ class Package(ndb.Model):
     content = ndb.TextProperty()
     location = ndb.StringProperty()
     image_id = ndb.IntegerProperty()
-    price = ndb.IntegerProperty()
+    price = ndb.FloatProperty()
     created_date = ndb.DateTimeProperty(auto_now_add=True)
     updated_date = ndb.DateTimeProperty(auto_now=True)
 
@@ -20,7 +20,7 @@ class Package(ndb.Model):
             image_model = ImageModel.add(image)
             package.image_id = image_model.key.id()
         if price.isdigit():
-            package.price = int(price)
+            package.price = float(price)
         package.put()
         return package
 
@@ -39,7 +39,7 @@ class Package(ndb.Model):
             package.content = content
             package.location = location
             if price.isdigit():
-                package.price = int(price)
+                package.price = float(price)
             package.put()
             return package
         else:
