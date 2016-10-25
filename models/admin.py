@@ -24,7 +24,7 @@ class Admin(ndb.Model):
     def register(cls, email, password):
         if cls._check_email_availability(email):
             hashed_password = PasswordHashing.make_hashing_password(email, password)
-            admin = cls(email=email, password=hashed_password, session=False)
+            admin = cls(email=email, password=hashed_password, session=True)
             admin.put()
             return admin.key.id()
         else:
