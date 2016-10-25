@@ -9,16 +9,8 @@ class Reservation(ndb.Model):
     created_date = ndb.DateTimeProperty(auto_now_add=True)
 
     @classmethod
-    def add(cls, guest, package, price_per_person, number_of_people):
-        reservation = cls(guest_id=guest.key.id(), package_id=package.key.id())
-        print "price_per_person..."
-        print price_per_person
-        print "number_of_people..."
-        print number_of_people
-        try:
-            reservation.price_per_person = float(price_per_person)
-        except ValueError:
-            pass
+    def add(cls, guest, package, number_of_people):
+        reservation = cls(guest_id=guest.key.id(), package_id=package.key.id(), price_per_person=package.price)
         if number_of_people.isdigit():
             reservation.number_of_people = int(number_of_people)
         reservation.put()
@@ -30,15 +22,12 @@ class Reservation(ndb.Model):
         return reservations
 
     @classmethod
-    def update(cls, reservation_id, guest, package, price_per_person, number_of_people):
+    def update(cls, reservation_id, guest, package, number_of_people):
         reservation = cls.get_by_id(int(reservation_id))
         if reservation:
             reservation.guest_id = guest.key.id()
             reservation.package_id = package.key.id()
-            try:
-                reservation.price_per_person = float(price_per_person)
-            except ValueError:
-                pass
+            reservation.price_per_person = package.price
             if number_of_people.isdigit():
                 reservation.number_of_people = int(number_of_people)
             reservation.put()

@@ -11,9 +11,8 @@ class ReservationAdd(Handlers):
             if package_id.isdigit():
                 package = Package.get_by_id(int(package_id))
                 if package:
-                    price_per_person = self.request.get("price_per_person")
                     number_of_people = self.request.get("number_of_people")
-                    reservation = Reservation.add(guest, package, price_per_person, number_of_people)
+                    reservation = Reservation.add(guest, package, number_of_people)
                     response = {
                         "reservationId": reservation.key.id(),
                         "pricePerPerson": reservation.price_per_person,
