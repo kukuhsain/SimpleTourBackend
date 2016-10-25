@@ -41,21 +41,24 @@ class ReservationGetAll(Handlers):
         reservations = Reservation.get_all()
         list_of_json_reservations = []
         for reservation in reservations:
-            package = Package.get_by_id(reservation.package_id)
+            print "reservation package id..."
+            print reservation.package_id
+            package = Package.get_by_id(int(reservation.package_id))
+            print package
             list_of_json_reservations.append({
                 "reservationId": reservation.key.id(),
                 "pricePerPerson": reservation.price_per_person,
                 "numberOfPeople": reservation.number_of_people,
                 "createdDate": reservation.created_date.isoformat(),
-                "package": {
-                    "packageId": package.key.id(),
-                    "title": package.title,
-                    "content": package.content,
-                    "location": package.location,
-                    "price": package.price,
-                    "imageUrl": "/image?image_id=" + str(package.image_id),
-                    "createdDate": package.created_date.isoformat(),
-                }
+                # "package": {
+                #     "packageId": package.key.id(),
+                #     "title": package.title,
+                #     "content": package.content,
+                #     "location": package.location,
+                #     "price": package.price,
+                #     "imageUrl": "/image?image_id=" + str(package.image_id),
+                #     "createdDate": package.created_date.isoformat(),
+                # }
             })
         response = list_of_json_reservations
         self._response_json(response)
