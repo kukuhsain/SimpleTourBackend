@@ -19,8 +19,10 @@ class Package(ndb.Model):
         if image:
             image_model = ImageModel.add(image)
             package.image_id = image_model.key.id()
-        if price.isdigit():
+        try:
             package.price = float(price)
+        except ValueError:
+            pass
         package.put()
         return package
 
@@ -37,8 +39,10 @@ class Package(ndb.Model):
                 package.title = title
                 package.content = content
                 package.location = location
-                if price.isdigit():
+                try:
                     package.price = float(price)
+                except ValueError:
+                    pass
                 package.put()
                 return package
             else:
