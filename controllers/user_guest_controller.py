@@ -11,7 +11,6 @@ class UserGuestRegister(Handlers):
         name = self.request.get("name")
         phone = self.request.get("phone")
 
-        self.response.headers['Content-Type'] = 'application/json'
         if email and password:
             user = UserGuest.register(email, password, name, phone)
             if user:
