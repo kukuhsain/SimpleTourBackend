@@ -3,7 +3,7 @@ from utils.password_hashing import PasswordHashing
 from utils.token_hashing import TokenHashing
 
 
-class UserGuest(ndb.Model):
+class UserHost(ndb.Model):
     email = ndb.StringProperty(required=True)
     password = ndb.StringProperty(required=True)
     name = ndb.StringProperty()
