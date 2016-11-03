@@ -9,7 +9,7 @@ from controllers.package_controller import PackageGetOne, PackageAdd, PackageGet
 from controllers.reservation_controller import ReservationAdd, ReservationGetAll
 from controllers.user_guest_controller import UserGuestLogin
 from controllers.user_guest_controller import UserGuestRegister, UserGuestLogout
-
+from controllers.user_host_controller import UserHostRegister, UserHostLogin, UserHostLogout
 
 app = webapp2.WSGIApplication([
     ('/', Home),
@@ -18,6 +18,11 @@ app = webapp2.WSGIApplication([
     ('/admin/register', AdminRegister),
     ('/admin/login', AdminLogin),
     ('/admin/logout', AdminLogout),
+
+    # User Guest Section
+    ('/host/register', UserHostRegister),
+    ('/host/login', UserHostLogin),
+    ('/host/logout', UserHostLogout),
 
     # User Guest Section
     ('/guest/register', UserGuestRegister),
