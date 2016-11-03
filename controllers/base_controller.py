@@ -4,6 +4,7 @@ import json
 from functools import wraps
 
 from models.admin import Admin
+from models.user_host import UserHost
 from utils.token_hashing import TokenHashing
 from models.user_guest import UserGuest
 
@@ -53,6 +54,24 @@ class Handlers(webapp2.RequestHandler):
             if admin:
                 if admin.session:
                     return admin
+                else:
+                    self._raise_403_response()
+                    return False
+            else:
+                self._raise_403_response()
+                return False
+        else:
+            self._raise_403_response()
+            return False
+
+    def _authenticate_user_host(self):
+        access_token = self.request.get("access_token")
+        user_id = TokenHashing.check_secure_value(access_token)
+        if user_id:
+            user = UserHost.get_by_id(int(user_id))
+            if user:
+                if user.session:
+                    return user
                 else:
                     self._raise_403_response()
                     return False

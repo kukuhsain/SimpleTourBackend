@@ -4,8 +4,8 @@ from models.destination import Destination
 
 class DestinationAdd(Handlers):
     def post(self):
-        admin = self._authenticate_admin()
-        if admin:
+        host = self._authenticate_user_host()
+        if host:
             title = self.request.get("title")
             content = self.request.get("content")
             location = self.request.get("location")
@@ -62,8 +62,8 @@ class DestinationGetOne(Handlers):
 
 class DestinationUpdate(Handlers):
     def post(self):
-        admin = self._authenticate_admin()
-        if admin:
+        host = self._authenticate_user_host()
+        if host:
             destination_id = self.request.get("destination_id")
             title = self.request.get("title")
             content = self.request.get("content")
@@ -86,8 +86,8 @@ class DestinationUpdate(Handlers):
 
 class DestinationDelete(Handlers):
     def post(self):
-        admin = self._authenticate_admin()
-        if admin:
+        host = self._authenticate_user_host()
+        if host:
             destination_id = self.request.get("destination_id")
             result = Destination.delete(destination_id)
             if result:

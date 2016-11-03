@@ -5,8 +5,8 @@ from models.package import Package
 
 class PackageAdd(Handlers):
     def post(self, destination_id):
-        admin = self._authenticate_admin()
-        if admin:
+        host = self._authenticate_user_host()
+        if host:
             if destination_id.isdigit():
                 destination = Destination.get_by_id(int(destination_id))
                 if destination:
@@ -88,8 +88,8 @@ class PackageGetOne(Handlers):
 
 class PackageUpdate(Handlers):
     def post(self, destination_id):
-        admin = self._authenticate_admin()
-        if admin:
+        host = self._authenticate_user_host()
+        if host:
             if destination_id.isdigit():
                 destination = Destination.get_by_id(int(destination_id))
                 if destination:
@@ -124,8 +124,8 @@ class PackageUpdate(Handlers):
 
 class PackageDelete(Handlers):
     def post(self, destination_id):
-        admin = self._authenticate_admin()
-        if admin:
+        host = self._authenticate_user_host()
+        if host:
             if destination_id.isdigit():
                 destination = Destination.get_by_id(int(destination_id))
                 if destination:
