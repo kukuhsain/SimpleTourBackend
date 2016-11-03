@@ -11,3 +11,5 @@ handlers:
 
 skip_files:
 - ^(tests/.*)
+- ^(.git/.*)
+- ^(.idea/.*)
